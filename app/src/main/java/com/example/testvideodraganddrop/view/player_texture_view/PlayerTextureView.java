@@ -3,11 +3,13 @@ package com.example.testvideodraganddrop.view.player_texture_view;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.TextureView;
 import android.widget.Checkable;
 
 import androidx.annotation.NonNull;
 
+import com.example.testvideodraganddrop.utils.GestureDetector;
 import com.example.testvideodraganddrop.utils.RatioKeeper;
 
 import java.util.Optional;
@@ -16,7 +18,7 @@ import java.util.function.Consumer;
 import reactor.core.publisher.ReplayProcessor;
 
 
-public final class PlayerTextureView extends TextureView implements Checkable, Consumer<String> {
+public final class PlayerTextureView extends TextureView implements Checkable, Consumer<String>, GestureDetector.OnGestureListener {
 
   ReplayProcessor<Optional<String>> mProcessorItem = ReplayProcessor.cacheLast();
   ReplayProcessor<Boolean> mProcessorChecked = ReplayProcessor.cacheLastOrDefault(isChecked());
@@ -26,6 +28,8 @@ public final class PlayerTextureView extends TextureView implements Checkable, C
   private Runnable mDisposable = null;
 
   private boolean isChecked;
+
+  private float dX, dY;
 
   /** Aspect Ratio Keeper. */
   private final RatioKeeper mRatioKeeper =
@@ -48,8 +52,34 @@ public final class PlayerTextureView extends TextureView implements Checkable, C
     contract = new PlayerTextureContractImpl(this);
 
     accept("https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_adv_example_hevc/v3/prog_index.m3u8");
-    setOnClickListener(v -> setChecked(!isChecked()));
+    postDelayed(() -> setChecked(true), 2000);
+    //setOnClickListener(v -> setChecked(!isChecked()));
 
+  }
+
+  @Override
+  public boolean onTouchEvent(MotionEvent event) {
+      switch (event.getAction()) {
+      case MotionEvent.ACTION_DOWN:
+        dX = this.getX() - event.getRawX();
+        dY = this.getY() - event.getRawY();
+        break;
+
+      case MotionEvent.ACTION_MOVE:
+        float newX = event.getRawX() + dX;
+        float newY = event.getRawY() + dY;
+
+        /*this.animate()
+          .x(newX).y(newY)
+          .setDuration(0)
+          .start();*/
+
+        this.setX(newX);
+        this.setY(newY);
+        break;
+    }
+
+    return true;
   }
 
   @Override

@@ -86,7 +86,7 @@ public class GestureDetector {
    * @param listener the listener invoked for all the callbacks, this must not be null.
    * @param isLongpressEnabled whether longpress should be enabled.
    */
-  GestureDetector(Context context, OnGestureListener listener, boolean isLongpressEnabled) {
+  public GestureDetector(Context context, OnGestureListener listener, boolean isLongpressEnabled) {
     mHandler = new Handler(); mListener = listener;
     /*
      * Set whether longpress is enabled, if this is enabled when a user
@@ -490,7 +490,7 @@ public class GestureDetector {
    * this interface.
    */
   @SuppressWarnings({ "unused", "SameReturnValue" })
-  interface OnGestureListener {
+  public interface OnGestureListener {
 
     /**
      * Notified when a tap occurs with the down {@link MotionEvent}

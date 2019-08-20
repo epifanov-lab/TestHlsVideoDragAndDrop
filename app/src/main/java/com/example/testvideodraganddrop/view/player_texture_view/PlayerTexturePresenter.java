@@ -43,8 +43,9 @@ public class PlayerTexturePresenter implements Disposable {
     mContract.mFluxItems
       .doOnNext(s -> setPlayer(WebkaPlayer.EMPTY))
       .flatMap(Mono::justOrEmpty)
+      .transform(Schedule::work_work)
       .switchMap(url -> HlsMediaController.createPlayerAsync(mContract.getContext(), url, mContract.getView()))
-      .subscribe(player -> setPlayer(player));
+      .subscribe(this::setPlayer);
 
     dChecked = mContract.mFluxChecked
       .subscribe(this::setChecked);
