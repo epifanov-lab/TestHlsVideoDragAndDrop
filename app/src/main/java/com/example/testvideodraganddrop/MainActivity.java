@@ -83,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
 }
 
 // Для снапинга использовать SpringAnimation
-// OnDragListener
-// ViewDragHelper
+// https://developer.android.com/guide/topics/graphics/spring-animation
+// https://medium.com/over-engineering/android-using-physics-based-animations-in-custom-views-springanimation-5c3a70c0dd0d
+// https://developer.android.com/training/animation/overview#physics-based
+// https://developer.android.com/guide/topics/graphics/spring-animation
+
+// OnDragListener https://www.vogella.com/tutorials/AndroidDragAndDrop/article.html
+// ViewDragHelper https://medium.com/android-development-p-ractises/dragging-panel-with-viewdraghelper-6df8dd980082
 // GestureDetector onScroll
